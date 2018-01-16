@@ -29,7 +29,7 @@ NetworkConfig = namedtuple('NetworkConfig', 'channel_manager_address start_block
 # option --channel-manager-address when running the proxy
 NETWORK_CONFIG = {
     '1': NetworkConfig('0x0', 0),
-    '3': NetworkConfig('0x161a0d7726EB8B86EB587d8BD483be1CE87b0609', 2400640),
+    '3': NetworkConfig('0xCADe83b99E7B37c644D6D3b278Dd076c2D9f14E3', 2466625),
     '42': NetworkConfig('0xB9721dF0e024114e7B25F2cF503d8CBE3D52b400', 5230017)
 }
 # map NETWORK_CONFIG to a network_id: manager_address dict

@@ -2,6 +2,7 @@
 A simple Python script to deploy contracts and then do a smoke test for them.
 '''
 import click
+import time
 from populus import Project
 from eth_utils import (
     is_address,
@@ -91,6 +92,7 @@ def main(**kwargs):
                 args=[supply, token_name, token_symbol, token_decimals],
                 transaction={'from': owner}
             )
+            time.sleep(180)
             receipt = check_succesful_tx(chain.web3, txhash, txn_wait)
             token_address = receipt['contractAddress']
 
@@ -103,6 +105,7 @@ def main(**kwargs):
             args=[token_address, challenge_period, []],
             transaction={'from': owner}
         )
+        time.sleep(180)
         receipt = check_succesful_tx(chain.web3, txhash, txn_wait)
         microraiden_address = receipt['contractAddress']
 
