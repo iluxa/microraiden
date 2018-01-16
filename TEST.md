@@ -4,8 +4,11 @@ Ropsten ethereum network must be synced, two accounts need for test:
 <account1> - account 1 ropsten ethereum address
 <path_account1_password> - path to file with <account1> password
 <account2> - account 2 ropsten ethereum address
-- geth command for the test:
+
+geth command for the test:
+```
 geth --testnet --syncmode fast --cache 1024 --rpc --rpcaddr 127.0.0.1 --rpcport 8545 --unlock <account1> --password <path_account1_password> --rpcapi admin,debug,miner,shh,txpool,personal,eth,net,web3
+```
 
 ## Enter commands:
 ```
@@ -37,7 +40,9 @@ CustomToken address is <token_address>
 RaidenMicroTransferChannels address is <channel_address>
 ```
 you also can explore transactions at address:
+```
 https://ropsten.etherscan.io/address/<account1>
+```
 
 ## Copy keys <account1> and <account2> keyfiles from geth store to <git_root>/microraiden directory with name respectively key1 and key2
 ## Create file password.txt with <account1> password in <git_root>/microraiden directory
