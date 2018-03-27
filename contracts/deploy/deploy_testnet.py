@@ -13,6 +13,11 @@ from utils.utils import (
     wait,
 )
 
+from web3 import Web3, HTTPProvider
+from web3.middleware.pythonic import (
+    pythonic_middleware,
+    to_hexbytes,
+)
 
 @click.command()
 @click.option(
@@ -36,7 +41,7 @@ from utils.utils import (
 )
 @click.option(
     '--token-name',
-    default='CustomToken',
+    default='TestMOS',
     help='Token contract name.'
 )
 @click.option(
@@ -46,7 +51,7 @@ from utils.utils import (
 )
 @click.option(
     '--token-symbol',
-    default='TKN',
+    default='TMOS',
     help='Token contract symbol.'
 )
 @click.option(
@@ -79,13 +84,22 @@ def main(**kwargs):
         web3 = chain.web3
         print('Web3 provider is', web3.providers[0])
 
+        # Temporary fix for Rinkeby; PoA adds bytes to extraData, which is not yellow-paper-compliant
+        # https://github.com/ethereum/web3.py/issues/549
+        if int(web3.version.network) == 4:
+            txn_wait = 500
+            size_extraData_for_poa = 200   # can change
+        
+            pythonic_middleware.__closure__[2].cell_contents['eth_getBlockByNumber'].args[1].args[0]['extraData'] = to_hexbytes(size_extraData_for_poa, variable_length=True)
+            pythonic_middleware.__closure__[2].cell_contents['eth_getBlockByHash'].args[1].args[0]['extraData'] = to_hexbytes(size_extraData_for_poa, variable_length=True)
+
         owner = owner or web3.eth.accounts[0]
         assert owner and is_address(owner), 'Invalid owner provided.'
         owner = to_checksum_address(owner)
         print('Owner is', owner)
         assert web3.eth.getBalance(owner) > 0, 'Account with insuficient funds.'
 
-        token = chain.provider.get_contract_factory('CustomToken')
+        token = chain.provider.get_contract_factory('TestMOS')
 
         if not token_address:
             txhash = token.deploy(

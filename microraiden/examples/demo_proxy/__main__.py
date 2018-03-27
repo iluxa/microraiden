@@ -14,6 +14,9 @@ from microraiden.examples.demo_resources import (
     PaywalledTeapot
 )
 
+class TestResource():
+    def get(self, url):
+        return "HI I AM A TEST", 418
 
 @main.command()
 @click.option(
@@ -32,6 +35,7 @@ from microraiden.examples.demo_resources import (
     help='Path to landing page file (to be shown in /)',
     type=click.Path(exists=True, dir_okay=False, resolve_path=True)
 )
+
 @pass_app
 def start(app, host, port, index_file):
     fortunes_en = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../data/fortunes'))
@@ -42,6 +46,7 @@ def start(app, host, port, index_file):
                                resource_class_args=(fortunes_cn,))
     app.add_paywalled_resource(PaywalledDoggo, '/doggo.txt', price=2 * TKN_DECIMALS)
     app.add_paywalled_resource(PaywalledTeapot, '/teapot', 3 * TKN_DECIMALS)
+#app.add_paywalled_resource(TestResource, '/test', 3 * TKN_DECIMALS)
 
     if index_file:
         app.app.add_url_rule('/', 'index', lambda: send_file(index_file))

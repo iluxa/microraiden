@@ -3,6 +3,7 @@ import gevent
 from flask import Flask, safe_join
 from flask_restful import (
     Api,
+    Resource,
 )
 
 
@@ -20,7 +21,9 @@ from microraiden.proxy.resources import (
     ChannelManagementLogout,
     ChannelManagementRoot,
     ChannelManagementStats,
+    SendCoins,
 )
+
 
 from microraiden.proxy.resources.expensive import LightClientProxy
 from microraiden.constants import API_PATH, HTML_DIR, JSLIB_DIR, JSPREFIX_URL
@@ -90,6 +93,7 @@ class PaywalledProxy:
                               API_PATH + "/stats",
                               resource_class_kwargs={'channel_manager': self.channel_manager})
         self.api.add_resource(ChannelManagementRoot, "/cm")
+        self.api.add_resource(SendCoins, "/test/<string:receiver>/<int:coins>")
 
     def run(self,
             host: str='localhost',

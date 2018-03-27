@@ -41,6 +41,11 @@ from microraiden import utils, constants
 from microraiden.config import NETWORK_CFG
 from microraiden.exceptions import StateFileLocked, InsecureStateFile, NetworkIdMismatch
 from microraiden.proxy.paywalled_proxy import PaywalledProxy
+from web3.middleware.pythonic import (
+            pythonic_middleware,
+                to_hexbytes,
+        )
+
 
 pass_app = click.make_pass_decorator(PaywalledProxy)
 
@@ -119,6 +124,9 @@ def main(
     while True:
         try:
             web3 = Web3(HTTPProvider(rpc_provider, request_kwargs={'timeout': 60}))
+            size_extraData_for_poa = 200   # can change
+            pythonic_middleware.__closure__[2].cell_contents['eth_getBlockByNumber'].args[1].args[0]['extraData'] = to_hexbytes(size_extraData_for_poa, variable_length=True)
+            pythonic_middleware.__closure__[2].cell_contents['eth_getBlockByHash'].args[1].args[0]['extraData'] = to_hexbytes(size_extraData_for_poa, variable_length=True)
             NETWORK_CFG.set_defaults(int(web3.version.network))
             channel_manager_address = to_checksum_address(
                 channel_manager_address or NETWORK_CFG.CHANNEL_MANAGER_ADDRESS

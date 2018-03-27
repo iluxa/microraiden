@@ -35,8 +35,10 @@ class Channel(object):
         self.deposit = deposit  # deposit is maximum funds that can be used
         self.open_block_number = open_block_number
 
+        self.old_balance = 0
         self.balance = 0  # how much of the deposit has been spent
         self.state = ChannelState.UNDEFINED
+        self.old_signature = None
         self.last_signature = None
         # if set, this is the absolute block_number the channel can be settled
         self.settle_timeout = -1

@@ -42,7 +42,9 @@ CREATE TABLE `channels` (
     `open_block_number` INTEGER         NOT NULL,
     `deposit`           DECIMAL(78,0)   NOT NULL,
     `balance`           DECIMAL(78,0)   NOT NULL,
+    `old_balance`       DECIMAL(78,0)   NOT NULL,
     `last_signature`    CHAR(132),
+    `old_signature`     CHAR(132),
     `settle_timeout`    INTEGER         NOT NULL,
     `mtime`             INTEGER         NOT NULL,
     `ctime`             INTEGER         NOT NULL,
@@ -87,6 +89,8 @@ UPDATE_SYNCSTATE_SQL = {
 
 ADD_CHANNEL_SQL = """
 INSERT OR REPLACE INTO `channels` VALUES (
+    ?,
+    ?,
     ?,
     ?,
     ?,
@@ -344,7 +348,9 @@ class ChannelManagerState(object):
             channel.open_block_number,
             str(channel.deposit),
             str(channel.balance),
+            str(channel.old_balance),
             channel.last_signature,
+            channel.old_signature,
             channel.settle_timeout,
             channel.mtime,
             channel.ctime,

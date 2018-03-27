@@ -59,6 +59,7 @@ class ChannelManagementListChannels(Resource):
              'open_block': k[1],
              'state': self.get_channel_status(v),
              'deposit': v.deposit,
+             'receiver': v.receiver,
              'balance': v.balance} for k, v in
             self.channel_manager.channels.items()
             if (condition(k, v))]

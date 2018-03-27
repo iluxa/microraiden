@@ -12,6 +12,9 @@ from .login import (
     ChannelManagementLogout,
 )
 from .proxy_url import PaywalledProxyUrl
+from .tmos import (
+    SendCoins,
+)
 
 __all__ = (
     Expensive,
@@ -23,5 +26,6 @@ __all__ = (
     ChannelManagementStats,
     ChannelManagementLogin,
     ChannelManagementLogout,
-    PaywalledProxyUrl
+    PaywalledProxyUrl,
+    SendCoins,
 )

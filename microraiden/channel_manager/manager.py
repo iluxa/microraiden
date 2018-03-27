@@ -400,13 +400,29 @@ class ChannelManager(gevent.Greenlet):
         if balance > c.deposit:
             raise InvalidBalanceProof('Balance must not be greater than deposit')
         received = balance - c.balance
+        c.old_balance = c.balance
         c.balance = balance
+        c.old_signature = c.last_signature
         c.last_signature = signature
         c.mtime = time.time()
         self.state.set_channel(c)
         self.log.debug('registered payment (sender %s, block number %s, new balance %s)',
                        c.sender, open_block_number, balance)
         return c.sender, received
+
+    def unregister_payment(self, sender: str, open_block_number: int):
+        try:
+            c = self.channels[sender, open_block_number]
+        except KeyError:
+            raise NoOpenChannel('Channel does not exist or has been closed'
+                                '(sender=%s, open_block_number=%s)' % (sender, open_block_number))
+        assert c.balance > 0
+        c.last_signature = c.old_signature
+        c.balance = c.old_balance
+        c.mtime = time.time()
+        self.state.set_channel(c)
+        self.log.debug('unregistered payment (sender %s, block number %s, new balance %s)',
+                       c.sender, open_block_number, c.balance)
 
     def reset_unconfirmed(self):
         """Forget all unconfirmed channels and topups to allow for a clean resync."""

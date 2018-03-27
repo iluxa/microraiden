@@ -14,8 +14,8 @@ Machine-based, rapid creation of many tokens would not necessarily need these ex
 
 import "./StandardToken.sol";
 
-/// @title CustomToken
-contract CustomToken is StandardToken {
+/// @title TestMOS
+contract TestMOS is StandardToken {
 
     /*
      *  Token metadata
@@ -41,7 +41,7 @@ contract CustomToken is StandardToken {
     /// @param token_name Token name for display.
     /// @param token_symbol Token symbol.
     /// @param decimal_units Number of token decimals.
-    function CustomToken (
+    function TestMOS (
         uint256 initial_supply,
         string token_name,
         string token_symbol,

@@ -52,13 +52,23 @@ NETWORK_CONFIG_DEFAULTS = {
     ),
     # rinkeby
     4: NetworkConfig(
-        channel_manager_address='0xbEc8fb898E6Da01152576d1A1ACdd2c957E56fb1',
-        start_sync_block=1642336
+#channel_manager_address='0xbEc8fb898E6Da01152576d1A1ACdd2c957E56fb1',
+#channel_manager_address='0x45fe9a68af651cc5c0fb2c3afc24bb7205eb7e27',
+#channel_manager_address='0x373AabECE728E241eFF3EEbe1F0C1665ebFf3d9d',
+#channel_manager_address='0xa18bdF0EdEDc0a43C70D00230AbB691b71D9dcC4',
+        channel_manager_address='0xB69c353cbA3be3f33910C7c5fFA54C228bde8934',
+#start_sync_block=1642336
+        start_sync_block=1982803
     ),
     # kovan
     42: NetworkConfig(
         channel_manager_address='0xeD94E711e9DE1FF1E7dd34C39F0d4338A6A6ef92',
         start_sync_block=5523491
+    ),
+    # testrpc
+    779: NetworkConfig(
+        channel_manager_address='0x73b647cbA2FE75Ba05B8e12ef8F8D6327D6367bF',
+        start_sync_block=1
     ),
     # internal - used only with ethereum tester
     65536: NetworkConfig(
